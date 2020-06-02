@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     StringBuilder methodName = new StringBuilder();
     final static String textViewTexKey = "TEXTVIEW_TEXT";
     final static String nameVariableKey = "NAME_VARIABLE";
-    String name = "undefined";
+    String text = null;
     int count = 0;
 
     @Override
@@ -23,11 +23,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.textView);
-        createMethodName();
+        //createMethodName();
+
+        //textView.setText(text);
         Log.i("myTag", "call onCreate()");
         if (savedInstanceState == null) {
+            createMethodName();
+            textView.setText(text);
             Log.i("myTag", "saveInstanceState == null");
         } else {
+            onRestoreInstanceState(savedInstanceState);
             Log.i("myTag", "saveInstanceState != null");
         }
 
@@ -35,23 +40,28 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-
         createMethodName();
-        outState.putString(nameVariableKey, name);
-        TextView textView = findViewById(R.id.textView);
-        outState.putString(textViewTexKey, textView.getText().toString());
+        //textView.setText(text);
+        // outState.putString(nameVariableKey, text);
+        //TextView textView = findViewById(R.id.textView);
+        outState.putString(textViewTexKey, text);
+        System.out.println("save");
         super.onSaveInstanceState(outState);
+
     }
 
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+         super.onRestoreInstanceState(savedInstanceState);
         createMethodName();
-        name = savedInstanceState.getString(nameVariableKey);
+        //text = savedInstanceState.getString(nameVariableKey);
         String textViewText = savedInstanceState.getString(textViewTexKey);
-        TextView nameView = findViewById(R.id.textView);
-        nameView.setText(textViewText);
+//        //TextView textView = findViewById(R.id.textView);
+//        textView.setText(textViewText);
+        textView.setText(textViewText);
+
+        System.out.println("restore");
 
     }
 
@@ -63,11 +73,12 @@ public class MainActivity extends AppCompatActivity {
         methodName.append(count);
         methodName.append("Lifecycle ");
         methodName.append(stackTraceElement.getMethodName());
-        methodName.append("\n ");
+        methodName.append("\n");
         Log.d(TAG, methodName.toString());
         StringBuilder textViewA = new StringBuilder();
-        textViewA.append("\n" + methodName + " ");
-        textView.setText(textViewA);
+        textViewA.append("\n" + methodName);
+        text = textViewA.toString();
+        //textView.setText(text);
 
     }
 
@@ -75,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         createMethodName();
-
+        textView.setText(text);
 
     }
 
@@ -84,53 +95,54 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         createMethodName();
-
+        textView.setText(text);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         createMethodName();
-
+        textView.setText(text);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         createMethodName();
-
+        textView.setText(text);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         createMethodName();
-
+        textView.setText(text);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         createMethodName();
-
+        textView.setText(text);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         createMethodName();
-
+        textView.setText(text);
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
         createMethodName();
-
+        textView.setText(text);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         createMethodName();
+        textView.setText(text);
         return super.onKeyDown(keyCode, event);
 
 
@@ -140,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onKeyLongPress(int keyCode,
                                   KeyEvent event) {
         createMethodName();
+        textView.setText(text);
         return super.onKeyLongPress(keyCode, event);
 
     }
@@ -148,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         createMethodName();
+        textView.setText(text);
     }
 
 
